@@ -12,7 +12,7 @@ int main()
     int T, N, temp1, temp2, result;
     vector<int> V1;
     vector<int> V2;
-
+    vector<pair<int, int> > sum; 
     cin >> T;
     for (int i = 0; i < T; i++)
     {
@@ -23,29 +23,21 @@ int main()
             cin >> temp1 >> temp2;
             V1.push_back(temp1);
             V2.push_back(temp2);
+            sum.push_back(make_pair(temp1 + temp2, j));
         }
-
-        for (int j = 0; j < N; j++)
+        sort(sum.begin(), sum.end(), greater<>());
+        int flag = 1;
+        for(int j = 0; j < N; j++)
         {
-            if (j % 2 == 0)
+            if(flag == 1)
             {
-                int idx = max_element(V1.begin(), V1.end()) - V1.begin();
-                //int max = V1[idx];
-                result += V1[idx];
-                V1[idx] = 0;
-                V2[idx] = 0;
-                // V1.erase(V1.begin() + idx);
-                // V2.erase(V2.begin() + idx);
+                result += V1[sum[j].second];
+                flag = 0;
             }
-            else if (j % 2 == 1)
+            else
             {
-                int idx = max_element(V2.begin(), V2.end()) - V2.begin();
-                //int max = V2[idx];
-                result -= V2[idx];
-                V1[idx] = 0;
-                V2[idx] = 0;
-                // V1.erase(V1.begin() + idx);
-                // V2.erase(V2.begin() + idx);
+                result -= V2[sum[j].second];
+                flag = 1;
             }
         }
         cout << result << "\n";
