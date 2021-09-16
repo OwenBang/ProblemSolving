@@ -44,3 +44,20 @@ int main()
     }
     return 0;
 }
+
+// Read T
+// While T--
+// 	Read N
+// 	for i = 1 to N
+// 		Read resourceA[i], resourceB[i]
+// 		resourceSum[i] = make_pair(resourceA[i] + resourceB[i], i)
+// 	sort(&resourceSum[1], &resourceSum[N])
+// 	answer = 0, flag = 1
+// 	for i = 1 to N
+// 		if flag == 1
+// 			answer += resourceA[resourceSum[i].second]
+// 			flag = 0
+// 		else if flag == 0
+// 			answer -= resourceB[resourceSum[i].second]
+// 			flag = 1
+// 	print answer
