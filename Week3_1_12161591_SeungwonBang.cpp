@@ -1,12 +1,39 @@
 #include <iostream>
-#include <vector>
 #include <string>
-#include <map>
+#include <vector>
+#include <memory.h>
 using namespace std;
-class Node
+
+int T, N, A, B;
+string S;
+
+struct Node
 {
-    int num;
-    string name;
+    int parent = 0;
+    vector<int> children;
+    int length = 0;
+};
+
+// vector<Node> Tree;
+// vector<int> Directory;
+Node Tree[];
+int Directory[];
+
+void TreeTraversal(int u)
+{
+    if (u == 1)
+    {
+        Directory[u] = 4;
+    }
+    else
+    {
+        Directory[u] = Directory[Tree[u].parent] + 1 + Tree[u].length;
+    }
+
+    for (int i = 0; i < Tree[u].children.size(); i++)
+    {
+        TreeTraversal(Tree[u].children[i]);
+    }
 };
 int main()
 {
@@ -14,30 +41,33 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    int T, N, temp1, temp2;
-    
     cin >> T;
-    for(int i = 0; i < T; i++)
+    while (T > 0)
     {
         cin >> N;
-        map<Node, pair<Node, Node>> tree;
-        for(int j = 0; j < N - 1; j++)
+        memset(Tree, 0, N);
+        menset(Directory, 0, N);
+        int Directory[N];
+        for (int i = 1; i < N; i++)
         {
-            cin >> temp1 >> temp2;
-            dir[temp1 - 1].push_back(temp2 - 1);
+            cin >> A >> B;
+            Tree[A].children.push_back(B);
+            Tree[B].parent = A;
         }
-        for(int j = 0; j < N; j++)
+        for (int i = 0; i < N; i++)
         {
-            cin >> name;
-            dirname.push_back(name);
+            cin >> S;
+            Tree[i].length = S.length();
         }
-        for(int j = 0; j < N; j++)
+        TreeTraversal(1);
+
+        for (int i = 0; i < N; i++)
         {
-            if(j == 0) cout << "4\n";
-            else
-            {
-                
-            }
+            cout << Directory[i] << "\n";
         }
+        T--;
+        // Tree.clear();
+        // Directory.clear();
     }
+    return 0;
 }
